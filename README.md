@@ -166,14 +166,28 @@ y ningún producto es eliminado sin intención explícita.
 
 ## Capturas de pantalla
 
-Las capturas de la aplicación en funcionamiento se encuentran en la carpeta [`capturas/`](capturas/).
+Las capturas de la aplicación en funcionamiento se encuentran en la carpeta [`capturas/`](capturas/):
 
-| Captura | Descripción |
-|---------|-------------|
-| `lista-categorias.png` | Vista de listado de categorías (`/categorias`) |
-| `formulario-producto.png` | Formulario de nuevo producto (`/productos/nuevo`) |
-| `lista-productos.png` | Vista de listado de productos (`/productos`) |
-| `productos-filtrados.png` | Resultado del endpoint JPQL filtrado |
+| Captura | Vista | Descripción |
+|---|---|---|
+| `Captura_Lista_Categoria.png` | `/categorias` | Vista de listado de categorías con badges y acciones |
+| `Captura_Formulario_Producto.png` | `/productos/nuevo` | Formulario de producto con selector de categoría Many-to-One |
+| `Captura_Lista_Productos.png` | `/productos` | Listado completo de productos con precio, stock y categoría |
+| `Captura_Producto_Filtrado.png` | `/productos/categoria/...` | Consulta JPQL filtrada con `JOIN FETCH` y orden por precio |
+
+### Vistas del Sistema
+
+#### 1. Listado de Categorías
+![Listado de Categorías](capturas/Captura_Lista_Categoria.png)
+
+#### 2. Formulario de Nuevo Producto
+![Formulario de Producto](capturas/Captura_Formulario_Producto.png)
+
+#### 3. Listado General de Productos
+![Listado de Productos](capturas/Captura_Lista_Productos.png)
+
+#### 4. Consulta JPQL Personalizada (Productos Filtrados por Precio)
+![Productos Filtrados](capturas/Captura_Producto_Filtrado.png)
 
 ---
 
