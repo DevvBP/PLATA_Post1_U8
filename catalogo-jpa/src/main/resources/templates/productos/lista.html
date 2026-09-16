@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Listado de productos del catálogo">
+    <title>Productos — Catálogo JPA</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --accent: #6c63ff; --accent2: #a78bfa; --danger: #f87171; --success: #4ade80; --warning: #fbbf24; --text: #e2e8f0; --muted: #94a3b8; --border: #2d3154; --radius: 10px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 60px; }
+        nav .brand { font-size: 1.2rem; font-weight: 700; color: var(--accent2); text-decoration: none; }
+        nav a { color: var(--muted); text-decoration: none; font-size: .95rem; padding: .3rem .6rem; border-radius: 6px; transition: color .2s, background .2s; }
+        nav a:hover { color: var(--text); background: var(--surface2); }
+        main { max-width: 1100px; margin: 2.5rem auto; padding: 0 1.5rem; }
+        h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent2); }
+        .alert { padding: .85rem 1.2rem; border-radius: var(--radius); margin-bottom: 1.2rem; font-size: .95rem; border-left: 4px solid; }
+        .alert-success { background: #14532d33; border-color: var(--success); color: var(--success); }
+        .alert-danger { background: #7f1d1d33; border-color: var(--danger); color: var(--danger); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+        .table-wrapper { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+        thead tr { background: var(--surface2); }
+        th { text-align: left; padding: .85rem 1rem; color: var(--muted); font-weight: 600; font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; border-bottom: 1px solid var(--border); }
+        td { padding: .85rem 1rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
+        tbody tr:hover { background: var(--surface2); transition: background .15s; }
+        tbody tr:last-child td { border-bottom: none; }
+        .badge { display: inline-block; padding: .25rem .65rem; border-radius: 20px; font-size: .78rem; font-weight: 600; }
+        .badge-purple { background: #4c1d9533; color: var(--accent2); }
+        .badge-green { background: #14532d33; color: var(--success); }
+        .price { font-family: monospace; font-size: 1rem; color: var(--success); font-weight: 700; }
+        .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .5rem 1.1rem; border-radius: var(--radius); font-size: .9rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: opacity .2s, transform .1s; }
+        .btn:hover { opacity: .85; transform: translateY(-1px); }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-warning { background: #d97706; color: #fff; }
+        .btn-danger { background: #dc2626; color: #fff; }
+        .btn-sm { padding: .35rem .8rem; font-size: .82rem; }
+        .d-flex { display: flex; } .gap-2 { gap: .5rem; } .mb-4 { margin-bottom: 1.5rem; }
+        .justify-between { justify-content: space-between; } .align-center { align-items: center; }
+        .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); }
+        footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="/">&#9638; Catálogo JPA</a>
+    <a href="/categorias">Categorías</a>
+    <a href="/productos">Productos</a>
+</nav>
+
+<main>
+    <div class="d-flex justify-between align-center mb-4">
+        <h1>Productos</h1>
+        <a href="/productos/nuevo" class="btn btn-primary">&#43; Nuevo Producto</a>
+    </div>
+
+    <div th:if="${exito}" class="alert alert-success" th:text="${exito}"></div>
+    <div th:if="${error}"  class="alert alert-danger"  th:text="${error}"></div>
+
+    <div class="card">
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Categoría</th>
+                        <th>Precio</th>
+                        <th>Stock</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(productos)}">
+                        <td colspan="6">
+                            <div class="empty-state">
+                                <p>No hay productos registrados. ¡Agrega el primero!</p>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr th:each="prod : ${productos}">
+                        <td th:text="${prod.id}"></td>
+                        <td th:text="${prod.nombre}"></td>
+                        <td>
+                            <span class="badge badge-purple" th:text="${prod.categoria.nombre}"></span>
+                        </td>
+                        <td>
+                            <span class="price" th:text="${'$' + #numbers.formatDecimal(prod.precio, 1, 2)}"></span>
+                        </td>
+                        <td>
+                            <span class="badge badge-green" th:text="${prod.stock}"></span>
+                        </td>
+                        <td>
+                            <div class="d-flex gap-2">
+                                <a th:href="@{/productos/editar/{id}(id=${prod.id})}"
+                                   class="btn btn-warning btn-sm">Editar</a>
+                                <a th:href="@{/productos/eliminar/{id}(id=${prod.id})}"
+                                   class="btn btn-danger btn-sm">Eliminar</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+
+<footer>Unidad 8 &mdash; Spring Boot &plus; JPA/Hibernate &middot; Brayan Plata &copy; 2025</footer>
+</body>
+</html>

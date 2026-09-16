@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formulario de categoría — Catálogo JPA">
+    <title th:text="${titulo + ' — Catálogo JPA'}">Formulario Categoría</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --accent: #6c63ff; --accent2: #a78bfa; --danger: #f87171; --text: #e2e8f0; --muted: #94a3b8; --border: #2d3154; --radius: 10px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 60px; }
+        nav .brand { font-size: 1.2rem; font-weight: 700; color: var(--accent2); text-decoration: none; }
+        nav a { color: var(--muted); text-decoration: none; font-size: .95rem; padding: .3rem .6rem; border-radius: 6px; transition: color .2s, background .2s; }
+        nav a:hover { color: var(--text); background: var(--surface2); }
+        main { max-width: 600px; margin: 2.5rem auto; padding: 0 1.5rem; }
+        h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 1.5rem; color: var(--accent2); }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.8rem; }
+        .form-group { margin-bottom: 1.2rem; }
+        label { display: block; margin-bottom: .45rem; font-size: .9rem; color: var(--muted); font-weight: 500; }
+        input[type="text"], textarea { width: 100%; padding: .65rem .9rem; border: 1px solid var(--border); border-radius: var(--radius); background: var(--bg); color: var(--text); font-size: .95rem; transition: border-color .2s; }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent); }
+        textarea { resize: vertical; min-height: 90px; }
+        .field-error { color: var(--danger); font-size: .82rem; margin-top: .3rem; }
+        .is-invalid { border-color: var(--danger) !important; }
+        .btn { display: inline-flex; align-items: center; gap: .4rem; padding: .55rem 1.3rem; border-radius: var(--radius); font-size: .95rem; font-weight: 600; cursor: pointer; border: none; text-decoration: none; transition: opacity .2s, transform .1s; }
+        .btn:hover { opacity: .85; transform: translateY(-1px); }
+        .btn-primary { background: var(--accent); color: #fff; }
+        .btn-secondary { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+        .d-flex { display: flex; } .gap-3 { gap: .75rem; } .mt-4 { margin-top: 1.5rem; }
+        footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--border); margin-top: 4rem; }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="/">&#9638; Catálogo JPA</a>
+    <a href="/categorias">Categorías</a>
+    <a href="/productos">Productos</a>
+</nav>
+
+<main>
+    <h1 th:text="${titulo}">Formulario Categoría</h1>
+
+    <div class="card">
+        <form th:action="@{/categorias/guardar}" th:object="${categoria}" method="post" novalidate>
+            <input type="hidden" th:field="*{id}">
+
+            <div class="form-group">
+                <label for="nombre">Nombre <span style="color:#f87171">*</span></label>
+                <input type="text"
+                       id="nombre"
+                       th:field="*{nombre}"
+                       th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid'"
+                       placeholder="Ej: Electrónica, Ropa, Alimentos...">
+                <div class="field-error" th:if="${#fields.hasErrors('nombre')}"
+                     th:errors="*{nombre}"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción</label>
+                <textarea id="descripcion"
+                          th:field="*{descripcion}"
+                          placeholder="Descripción breve de la categoría (opcional)"></textarea>
+            </div>
+
+            <div class="d-flex gap-3 mt-4">
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                <a href="/categorias" class="btn btn-secondary">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</main>
+
+<footer>Unidad 8 &mdash; Spring Boot &plus; JPA/Hibernate &middot; Brayan Plata &copy; 2025</footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Catálogo JPA — Laboratorio Unidad 8 Spring Boot con JPA/Hibernate, relaciones y JPQL">
+    <title>Catálogo JPA — Unidad 8</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root { --bg: #0f1117; --surface: #1a1d27; --surface2: #22263a; --accent: #6c63ff; --accent2: #a78bfa; --success: #4ade80; --text: #e2e8f0; --muted: #94a3b8; --border: #2d3154; --radius: 10px; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; display: flex; flex-direction: column; }
+        nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 2rem; display: flex; align-items: center; gap: 2rem; height: 60px; }
+        nav .brand { font-size: 1.2rem; font-weight: 700; color: var(--accent2); text-decoration: none; }
+        nav a { color: var(--muted); text-decoration: none; font-size: .95rem; padding: .3rem .6rem; border-radius: 6px; transition: color .2s, background .2s; }
+        nav a:hover { color: var(--text); background: var(--surface2); }
+        .hero { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 4rem 2rem; }
+        .hero h1 { font-size: 3rem; font-weight: 800; background: linear-gradient(135deg, var(--accent2), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1rem; }
+        .hero p { color: var(--muted); font-size: 1.1rem; max-width: 560px; line-height: 1.7; margin-bottom: 2.5rem; }
+        .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; width: 100%; max-width: 700px; }
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem 1.5rem; text-decoration: none; color: var(--text); transition: border-color .2s, transform .2s; display: block; }
+        .card:hover { border-color: var(--accent); transform: translateY(-3px); }
+        .card .icon { font-size: 2rem; margin-bottom: 1rem; }
+        .card h2 { font-size: 1.2rem; margin-bottom: .4rem; color: var(--accent2); }
+        .card p { color: var(--muted); font-size: .9rem; }
+        footer { text-align: center; padding: 2rem; color: var(--muted); font-size: .82rem; border-top: 1px solid var(--border); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a class="brand" href="/">&#9638; Catálogo JPA</a>
+    <a href="/categorias">Categorías</a>
+    <a href="/productos">Productos</a>
+</nav>
+
+<div class="hero">
+    <h1>Catálogo JPA</h1>
+    <p>Laboratorio Unidad 8 &mdash; Spring Boot 3, JPA/Hibernate, relaciones Many-to-One y consultas JPQL personalizadas.</p>
+
+    <div class="cards">
+        <a href="/categorias" class="card">
+            <div class="icon">&#128218;</div>
+            <h2>Categorías</h2>
+            <p>Gestión completa de categorías con validación de nombre único.</p>
+        </a>
+        <a href="/productos" class="card">
+            <div class="icon">&#128230;</div>
+            <h2>Productos</h2>
+            <p>CRUD de productos con relación Many-to-One y filtros JPQL avanzados.</p>
+        </a>
+    </div>
+</div>
+
+<footer>Unidad 8 &mdash; Spring Boot &plus; JPA/Hibernate &middot; Brayan Plata &copy; 2025</footer>
+</body>
+</html>
